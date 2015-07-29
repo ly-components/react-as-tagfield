@@ -1,7 +1,7 @@
 import React from 'react';
-import AsTag from './AsTag';
+import Tag from './Tag';
 
-export default class AsTagField extends React.Component {
+export default class TagField extends React.Component {
 	static propTypes = {
 		value: React.PropTypes.arrayOf(React.PropTypes.string),
 		onChange: React.PropTypes.func,
@@ -30,16 +30,23 @@ export default class AsTagField extends React.Component {
 		this.props.onChange(tags);
 	}
 	render() {
-		var tags = this.state.tags;
-  	var highlight = this.state.highlight;
-  	var $tags = tags.map((tag, index) => {
-			return (highlight && index === tags.length - 1) ? <AsTag highlight>{tag}</AsTag> : <AsTag>{tag}</AsTag>;
-  	});
+		let {
+			tags,
+			highlight
+		} = this.state;
+		let {
+			name,
+			placeholder
+		} = this.props;
     return (
-    	<div className='as-tagfield'>
-			  {$tags}
-				<input name={this.props.name} type="hidden" value={JSON.stringify(this.state.tags)}></input>
-			  <input className='as-tags-input' placeholder={this.props.placeholder} type='text'/>
+    	<div className='react-as-tagfield'>
+			  {
+					tags.map((tag, index) => {
+						return (highlight && index === tags.length - 1) ? <Tag highlight>{tag}</Tag> : <Tag>{tag}</Tag>;
+			  	})
+				}
+				<input name={name} type="hidden" value={JSON.stringify(tags)}></input>
+			  <input className='react-as-tagfield-input' placeholder={placeholder} type='text'/>
 			</div>
     );
 	}
@@ -55,7 +62,7 @@ export default class AsTagField extends React.Component {
 		this.props.onChange(tags);
 	}
 	_removeTag() {
-		var tags = this.state.tags;
+		let tags = this.state.tags;
 		if(this.state.canDelete) {
 			tags = tags.slice(0, -1);
 			this.setState({
@@ -71,8 +78,8 @@ export default class AsTagField extends React.Component {
 			});
 	}
 	componentDidMount() {
-		var $tags = React.findDOMNode(this);
-		var $input = $tags.querySelector('.as-tags-input');
+		let $tags = React.findDOMNode(this);
+		let $input = $tags.querySelector('.react-as-tagfield-input');
 		var tags = this.state.tags;
 		$input.addEventListener('keyup', (e) => {
 			var key;
@@ -88,6 +95,5 @@ export default class AsTagField extends React.Component {
         	canDelete: false
         });
 		}, true);
-		this.props.onChange(tags);
 	}
 }

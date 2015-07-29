@@ -5,9 +5,8 @@ export default class AsTag extends React.Component {
 		super();
 	}
 	render() {
-		var className = 'as-tag' + (this.props.highlight ? ' as-tag-highlight':'');
 		return (
-			<div className={className}>
+			<div className={'react-as-tagfield-tag' + (this.props.highlight ? ' highlight':'')}>
 				{this.props.children}
 			</div>
 		);

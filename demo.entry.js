@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2dddee30543a74d8d59e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a83becfd5349ad3b8ac8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28850,13 +28850,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _libAsTagField = __webpack_require__(226);
+	var _libTagField = __webpack_require__(226);
 
-	var _libAsTagField2 = _interopRequireDefault(_libAsTagField);
+	var _libTagField2 = _interopRequireDefault(_libTagField);
 
 	__webpack_require__(231);
 
-	exports['default'] = _libAsTagField2['default'];
+	exports['default'] = _libTagField2['default'];
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); if (true) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(228), foundReactClasses = false; if (makeExportsHot(module, __webpack_require__(115))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.js" + ": " + err.message); } }); } } })(); }
@@ -28888,24 +28888,24 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AsTag = __webpack_require__(227);
+	var _Tag = __webpack_require__(227);
 
-	var _AsTag2 = _interopRequireDefault(_AsTag);
+	var _Tag2 = _interopRequireDefault(_Tag);
 
-	var AsTagField = (function (_React$Component) {
-		function AsTagField(props) {
-			_classCallCheck(this, AsTagField);
+	var TagField = (function (_React$Component) {
+		function TagField(props) {
+			_classCallCheck(this, TagField);
 
-			_get(Object.getPrototypeOf(AsTagField.prototype), 'constructor', this).call(this, props);
+			_get(Object.getPrototypeOf(TagField.prototype), 'constructor', this).call(this, props);
 			this.state = {
 				canDelete: false,
 				tags: props.value
 			};
 		}
 
-		_inherits(AsTagField, _React$Component);
+		_inherits(TagField, _React$Component);
 
-		_createClass(AsTagField, [{
+		_createClass(TagField, [{
 			key: 'getValue',
 			value: function getValue() {
 				return this.state.tags;
@@ -28921,25 +28921,29 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var tags = this.state.tags;
-				var highlight = this.state.highlight;
-				var $tags = tags.map(function (tag, index) {
-					return highlight && index === tags.length - 1 ? _react2['default'].createElement(
-						_AsTag2['default'],
-						{ highlight: true },
-						tag
-					) : _react2['default'].createElement(
-						_AsTag2['default'],
-						null,
-						tag
-					);
-				});
+				var _state = this.state;
+				var tags = _state.tags;
+				var highlight = _state.highlight;
+				var _props = this.props;
+				var name = _props.name;
+				var placeholder = _props.placeholder;
+
 				return _react2['default'].createElement(
 					'div',
-					{ className: 'as-tagfield' },
-					$tags,
-					_react2['default'].createElement('input', { name: this.props.name, type: 'hidden', value: JSON.stringify(this.state.tags) }),
-					_react2['default'].createElement('input', { className: 'as-tags-input', placeholder: this.props.placeholder, type: 'text' })
+					{ className: 'react-as-tagfield' },
+					tags.map(function (tag, index) {
+						return highlight && index === tags.length - 1 ? _react2['default'].createElement(
+							_Tag2['default'],
+							{ highlight: true },
+							tag
+						) : _react2['default'].createElement(
+							_Tag2['default'],
+							null,
+							tag
+						);
+					}),
+					_react2['default'].createElement('input', { name: name, type: 'hidden', value: JSON.stringify(tags) }),
+					_react2['default'].createElement('input', { className: 'react-as-tagfield-input', placeholder: placeholder, type: 'text' })
 				);
 			}
 		}, {
@@ -28978,7 +28982,7 @@
 				var _this = this;
 
 				var $tags = _react2['default'].findDOMNode(this);
-				var $input = $tags.querySelector('.as-tags-input');
+				var $input = $tags.querySelector('.react-as-tagfield-input');
 				var tags = this.state.tags;
 				$input.addEventListener('keyup', function (e) {
 					var key;
@@ -28991,7 +28995,6 @@
 						canDelete: false
 					});
 				}, true);
-				this.props.onChange(tags);
 			}
 		}], [{
 			key: 'propTypes',
@@ -29012,13 +29015,13 @@
 			enumerable: true
 		}]);
 
-		return AsTagField;
+		return TagField;
 	})(_react2['default'].Component);
 
-	exports['default'] = AsTagField;
+	exports['default'] = TagField;
 	module.exports = exports['default'];
 
-	/* REACT HOT LOADER */ }).call(this); if (true) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(228), foundReactClasses = false; if (makeExportsHot(module, __webpack_require__(115))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "AsTagField.jsx" + ": " + err.message); } }); } } })(); }
+	/* REACT HOT LOADER */ }).call(this); if (true) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(228), foundReactClasses = false; if (makeExportsHot(module, __webpack_require__(115))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "TagField.jsx" + ": " + err.message); } }); } } })(); }
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
 
 /***/ },
@@ -29059,10 +29062,9 @@
 		_createClass(AsTag, [{
 			key: 'render',
 			value: function render() {
-				var className = 'as-tag' + (this.props.highlight ? ' as-tag-highlight' : '');
 				return _react2['default'].createElement(
 					'div',
-					{ className: className },
+					{ className: 'react-as-tagfield-tag' + (this.props.highlight ? ' highlight' : '') },
 					this.props.children
 				);
 			}
@@ -29074,7 +29076,7 @@
 	exports['default'] = AsTag;
 	module.exports = exports['default'];
 
-	/* REACT HOT LOADER */ }).call(this); if (true) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(228), foundReactClasses = false; if (makeExportsHot(module, __webpack_require__(115))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "AsTag.jsx" + ": " + err.message); } }); } } })(); }
+	/* REACT HOT LOADER */ }).call(this); if (true) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(228), foundReactClasses = false; if (makeExportsHot(module, __webpack_require__(115))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "Tag.jsx" + ": " + err.message); } }); } } })(); }
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
 
 /***/ },
@@ -29228,7 +29230,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(233)();
-	exports.push([module.id, ".as-tag {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  border-radius: 3px;\n  margin: 0 10px 10px 0;\n  background-color: rgba(64, 224, 208, 0.5);\n  color: #666666;\n  cursor: default;\n}\n.as-tag.as-tag-highlight {\n  background-color: rgba(231, 76, 60, 0.5);\n  color: #666666;\n}\n.as-tag:after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.as-tagfield {\n  display: inline-block;\n  max-width: 600px;\n  padding: 10px 10px 0;\n  border-radius: 3px;\n  background-color: #ffffff;\n  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);\n  overflow: hidden;\n}\n.as-tagfield .as-tags-input {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  border: none;\n  line-height: 25px;\n  font-size: 18px;\n  margin-bottom: 10px;\n}\n.as-tagfield .as-tags-input:focus {\n  outline: none;\n}\n", ""]);
+	exports.push([module.id, ".react-as-tagfield {\n  display: inline-block;\n  max-width: 600px;\n  padding: 10px 10px 0;\n  border-radius: 3px;\n  background-color: #ffffff;\n  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);\n  overflow: hidden;\n}\n.react-as-tagfield .react-as-tagfield-input {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  border: none;\n  line-height: 25px;\n  font-size: 18px;\n  margin-bottom: 10px;\n}\n.react-as-tagfield .react-as-tagfield-input:focus {\n  outline: none;\n}\n.react-as-tagfield .react-as-tagfield-tag {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  border-radius: 3px;\n  margin: 0 10px 10px 0;\n  background-color: rgba(64, 224, 208, 0.5);\n  color: #666666;\n  cursor: default;\n}\n.react-as-tagfield .react-as-tagfield-tag.highlight {\n  background-color: rgba(231, 76, 60, 0.5);\n  color: #666666;\n}\n.react-as-tagfield .react-as-tagfield-tag:after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n", ""]);
 
 /***/ },
 /* 233 */

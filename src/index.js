@@ -1,5 +1,5 @@
-import AsTagField from './lib/AsTagField';
+import TagField from './lib/TagField';
 
 require('./style/index.less');
 
-export default AsTagField;
+export default TagField;

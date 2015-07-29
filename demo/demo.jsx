@@ -1,5 +1,5 @@
 import React from 'react';
-import AsTagField from '../src/index';
+import TagField from '../src/index';
 
 require('./demo.less');
 
@@ -27,7 +27,7 @@ class AsForm extends React.Component {
     return (
       <div>
         <div>
-          <AsTagField value={['JavaScript', 'CSS', 'HTML']} ref="tags" placeholder="输入新标签" onChange={this.handleTagChange} ></AsTagField>
+          <TagField value={['JavaScript', 'CSS', 'HTML']} ref="tags" placeholder="输入新标签" onChange={this.handleTagChange} ></TagField>
         </div>
         <div>
           <button className="submit" onClick={this.handleReset}>重置</button>
