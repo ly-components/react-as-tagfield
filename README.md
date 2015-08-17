@@ -37,6 +37,28 @@ name: React.PropTypes.string //隐藏input的name属性
 
 设置标签列表
 
+### on(string, function)
+
+绑定事件
+
+### once(string, function)
+
+绑定仅触发一次的事件
+
+### off(string [, function])
+
+解绑事件，如果没提供回调，则解绑该事件下所有回调
+
+### fire(string, [data1, data2...])
+
+触发事件，除第一个参数外，其他参数将作为数据传给事件回调函数
+
+### fireAll(string, [data1, data2...])
+
+触发事件，在执行事件注册的回调函数前，先执行props上的onXXX方法
+
+如`fireAll('change')`将会先执行`this.props.onChange`方法
+
 ## Development
 
 ```bash

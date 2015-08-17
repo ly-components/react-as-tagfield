@@ -6,7 +6,9 @@ require('./demo.less');
 class AsForm extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      value: ['JavaScript', 'CSS', 'HTML']
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleTagChange = this.handleTagChange.bind(this);
@@ -15,19 +17,18 @@ class AsForm extends React.Component {
     alert(JSON.stringify(this.refs.tags.getValue()));
   }
   handleReset() {
-    this.refs.tags.setValue(['JavaScript', 'CSS', 'HTML']);
+    this.setState({
+      value: ['JavaScript']
+    });
   }
   handleTagChange(tags) {
-    this.setState({
-      tags: tags
-    });
-    console.log(tags.join(', '));
+    console.log(tags);
   }
   render() {
     return (
       <div>
         <div>
-          <TagField value={['JavaScript', 'CSS', 'HTML']} ref="tags" placeholder="输入新标签" onChange={this.handleTagChange} ></TagField>
+          <TagField value={this.state.value} ref="tags" placeholder="输入新标签" onChange={this.handleTagChange} ></TagField>
         </div>
         <div>
           <button className="submit" onClick={this.handleReset}>重置</button>

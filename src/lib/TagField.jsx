@@ -1,7 +1,9 @@
 import React from 'react';
 import Tag from './Tag';
+import ReactMixin from 'react-mixin';
+import EventMixin from 'react-as-event-mixin';
 
-export default class TagField extends React.Component {
+class TagField extends React.Component {
 	static propTypes = {
 		value: React.PropTypes.arrayOf(React.PropTypes.string),
 		onChange: React.PropTypes.func,
@@ -27,7 +29,9 @@ export default class TagField extends React.Component {
 		this.setState({
 			tags: tags
 		});
-		this.props.onChange(tags);
+	}
+	componentWillReceiveProps(nextProps) {
+		nextProps.value && this.setValue(nextProps.value);
 	}
 	render() {
 		let {
@@ -45,7 +49,7 @@ export default class TagField extends React.Component {
 						return (highlight && index === tags.length - 1) ? <Tag highlight>{tag}</Tag> : <Tag>{tag}</Tag>;
 			  	})
 				}
-				<input name={name} type="hidden" value={JSON.stringify(tags)}></input>
+				{ name && <input name={name} type="hidden" value={tags.join(',')}></input> }
 			  <input className='react-as-tagfield-input' placeholder={placeholder} type='text'/>
 			</div>
     );
@@ -97,3 +101,7 @@ export default class TagField extends React.Component {
 		}, true);
 	}
 }
+
+ReactMixin(TagField.prototype, EventMixin);
+
+export default TagField;
