@@ -47,8 +47,7 @@ class TagField extends React.Component {
 		}, true);
 	}
 	componentWillReceiveProps(nextProps) {
-		nextProps.value && this.setValue(nextProps.value);
-		nextProps.defaultValue && !this.getValue() && this.setValue(nextProps.defaultValue);
+		Array.isArray(nextProps.value) && this.setValue(nextProps.value);
 	}
 	getValue() {
 		return this.state.tags;

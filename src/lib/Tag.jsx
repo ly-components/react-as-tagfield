@@ -3,9 +3,9 @@ import React from 'react';
 export default class Tag extends React.Component {
 	static displayName = 'Tag';
 	static propTypes = {
-		value: React.PropTypes.node,
 		highlight: React.PropTypes.bool,
-		onDelete: React.PropTypes.func
+		onDelete: React.PropTypes.func,
+		value: React.PropTypes.node
 	};
 	static defaultProps = {
 		value: null,
