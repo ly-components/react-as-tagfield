@@ -21,7 +21,8 @@ React.render(<TagField value={['JavaScript', 'CSS', 'HTML']} placeholder="输入
 ## Properties
 
 ```jsx
-value: React.PropTypes.arrayOf(React.PropTypes.string), //初始值
+defaultValue: React.PropTypes.arrayOf(React.PropTypes.string), //标签的默认值
+value: React.PropTypes.arrayOf(React.PropTypes.string), //标签的值
 onChange: React.PropTypes.func, //标签变化的回调函数
 placeholder: React.PropTypes.string, //提示文案
 name: React.PropTypes.string //隐藏input的name属性

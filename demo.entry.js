@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "05706ff08ec9742eb240"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9bddca32547482764e4e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28908,13 +28908,40 @@
 			_get(Object.getPrototypeOf(TagField.prototype), 'constructor', this).call(this, props);
 			this.state = {
 				canDelete: false,
-				tags: props.value
+				highlight: false,
+				tags: props.value || props.defaultValue
 			};
+			this._handleDelete = this._handleDelete.bind(this);
 		}
 
 		_inherits(TagField, _React$Component);
 
 		_createClass(TagField, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this = this;
+
+				var $tags = _react2['default'].findDOMNode(this);
+				var $input = $tags.querySelector('.react-as-tagfield-input');
+				$input.addEventListener('keyup', function (e) {
+					var key = undefined;
+					key = e.keyCode || e.which;
+					if (key === 13 || key === 188) {
+						_this._createTag($input.value.replace(',', ''));
+						$input.value = '';
+					} else if (key === 8) $input.value === '' && _this._removeTag();else _this.setState({
+						highlight: false,
+						canDelete: false
+					});
+				}, true);
+			}
+		}, {
+			key: 'componentWillReceiveProps',
+			value: function componentWillReceiveProps(nextProps) {
+				nextProps.value && this.setValue(nextProps.value);
+				nextProps.defaultValue && !this.getValue() && this.setValue(nextProps.defaultValue);
+			}
+		}, {
 			key: 'getValue',
 			value: function getValue() {
 				return this.state.tags;
@@ -28927,39 +28954,6 @@
 				});
 			}
 		}, {
-			key: 'componentWillReceiveProps',
-			value: function componentWillReceiveProps(nextProps) {
-				nextProps.value && this.setValue(nextProps.value);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _state = this.state;
-				var tags = _state.tags;
-				var highlight = _state.highlight;
-				var _props = this.props;
-				var name = _props.name;
-				var placeholder = _props.placeholder;
-
-				return _react2['default'].createElement(
-					'div',
-					{ className: 'react-as-tagfield' },
-					tags.map(function (tag, index) {
-						return highlight && index === tags.length - 1 ? _react2['default'].createElement(
-							_Tag2['default'],
-							{ highlight: true },
-							tag
-						) : _react2['default'].createElement(
-							_Tag2['default'],
-							null,
-							tag
-						);
-					}),
-					name && _react2['default'].createElement('input', { name: name, type: 'hidden', value: tags.join(',') }),
-					_react2['default'].createElement('input', { className: 'react-as-tagfield-input', placeholder: placeholder, type: 'text' })
-				);
-			}
-		}, {
 			key: '_createTag',
 			value: function _createTag(value) {
 				if (!value.trim()) return;
@@ -28970,7 +28964,7 @@
 					tags: tags,
 					highlight: false
 				});
-				this.props.onChange(tags);
+				this.fireAll('change', tags);
 			}
 		}, {
 			key: '_removeTag',
@@ -28983,47 +28977,68 @@
 						canDelete: false,
 						highlight: false
 					});
-					this.props.onChange(tags);
+					this.fireAll('change', tags);
 				} else this.setState({
 					highlight: true,
 					canDelete: true
 				});
 			}
 		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				var _this = this;
-
-				var $tags = _react2['default'].findDOMNode(this);
-				var $input = $tags.querySelector('.react-as-tagfield-input');
+			key: '_handleDelete',
+			value: function _handleDelete(value) {
 				var tags = this.state.tags;
-				$input.addEventListener('keyup', function (e) {
-					var key;
-					key = e.keyCode || e.which;
-					if (key === 13 || key === 188) {
-						_this._createTag($input.value.replace(',', ''));
-						$input.value = '';
-					} else if (key === 8) $input.value === '' && _this._removeTag();else _this.setState({
-						highlight: false,
-						canDelete: false
-					});
-				}, true);
+				var index = undefined;
+				if (!tags || (index = tags.indexOf(value)) === -1) return;
+				tags.splice(index, 1);
+				this.setState({
+					tags: tags
+				});
+				this.fireAll('change', tags);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				var _state = this.state;
+				var tags = _state.tags;
+				var highlight = _state.highlight;
+				var _props = this.props;
+				var name = _props.name;
+				var placeholder = _props.placeholder;
+
+				return _react2['default'].createElement(
+					'div',
+					{ className: 'react-as-tagfield' },
+					tags.map(function (tag, index) {
+						return highlight && index === tags.length - 1 ? _react2['default'].createElement(_Tag2['default'], { highlight: true, onDelete: _this2._handleDelete, value: tag }) : _react2['default'].createElement(_Tag2['default'], { onDelete: _this2._handleDelete, value: tag });
+					}),
+					name && _react2['default'].createElement('input', { name: name, type: 'hidden', value: tags }),
+					_react2['default'].createElement('input', { className: 'react-as-tagfield-input', placeholder: placeholder, type: 'text' })
+				);
 			}
 		}], [{
+			key: 'displayName',
+			value: 'TagField',
+			enumerable: true
+		}, {
 			key: 'propTypes',
 			value: {
-				value: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
+				defaultValue: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string),
+				name: _react2['default'].PropTypes.string,
 				onChange: _react2['default'].PropTypes.func,
 				placeholder: _react2['default'].PropTypes.string,
-				name: _react2['default'].PropTypes.string
+				value: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string)
 			},
 			enumerable: true
 		}, {
 			key: 'defaultProps',
 			value: {
-				value: [],
+				defaultValue: [],
+				value: null,
 				onChange: function onChange() {},
-				placeholder: 'Add a tag'
+				placeholder: 'Add a tag',
+				name: null
 			},
 			enumerable: true
 		}]);
@@ -29065,30 +29080,57 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var AsTag = (function (_React$Component) {
-		function AsTag() {
-			_classCallCheck(this, AsTag);
+	var Tag = (function (_React$Component) {
+		function Tag() {
+			_classCallCheck(this, Tag);
 
-			_get(Object.getPrototypeOf(AsTag.prototype), 'constructor', this).call(this);
+			_get(Object.getPrototypeOf(Tag.prototype), 'constructor', this).call(this);
+			this._handleDelete = this._handleDelete.bind(this);
 		}
 
-		_inherits(AsTag, _React$Component);
+		_inherits(Tag, _React$Component);
 
-		_createClass(AsTag, [{
+		_createClass(Tag, [{
+			key: '_handleDelete',
+			value: function _handleDelete() {
+				this.props.onDelete(this.props.value);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2['default'].createElement(
 					'div',
 					{ className: 'react-as-tagfield-tag' + (this.props.highlight ? ' highlight' : '') },
-					this.props.children
+					this.props.value,
+					_react2['default'].createElement('span', { className: 'react-as-tagfield-tag-del', onClick: this._handleDelete })
 				);
 			}
+		}], [{
+			key: 'displayName',
+			value: 'Tag',
+			enumerable: true
+		}, {
+			key: 'propTypes',
+			value: {
+				value: _react2['default'].PropTypes.node,
+				highlight: _react2['default'].PropTypes.bool,
+				onDelete: _react2['default'].PropTypes.func
+			},
+			enumerable: true
+		}, {
+			key: 'defaultProps',
+			value: {
+				value: null,
+				highlight: false,
+				onDelete: function onDelete() {}
+			},
+			enumerable: true
 		}]);
 
-		return AsTag;
+		return Tag;
 	})(_react2['default'].Component);
 
-	exports['default'] = AsTag;
+	exports['default'] = Tag;
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); if (true) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(228), foundReactClasses = false; if (makeExportsHot(module, __webpack_require__(115))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "Tag.jsx" + ": " + err.message); } }); } } })(); }
@@ -29709,7 +29751,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(237)();
-	exports.push([module.id, ".react-as-tagfield {\n  display: inline-block;\n  max-width: 600px;\n  padding: 10px 10px 0;\n  border-radius: 3px;\n  background-color: #ffffff;\n  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);\n  overflow: hidden;\n}\n.react-as-tagfield .react-as-tagfield-input {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  border: none;\n  line-height: 25px;\n  font-size: 18px;\n  margin-bottom: 10px;\n}\n.react-as-tagfield .react-as-tagfield-input:focus {\n  outline: none;\n}\n.react-as-tagfield .react-as-tagfield-tag {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  border-radius: 3px;\n  margin: 0 10px 10px 0;\n  background-color: rgba(64, 224, 208, 0.5);\n  color: #666666;\n  cursor: default;\n}\n.react-as-tagfield .react-as-tagfield-tag.highlight {\n  background-color: rgba(231, 76, 60, 0.5);\n  color: #666666;\n}\n.react-as-tagfield .react-as-tagfield-tag:after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n", ""]);
+	exports.push([module.id, ".react-as-tagfield {\n  display: inline-block;\n  max-width: 600px;\n  padding: 10px 10px 0;\n  border-radius: 3px;\n  background-color: #ffffff;\n  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);\n  overflow: hidden;\n}\n.react-as-tagfield .react-as-tagfield-input {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  border: none;\n  line-height: 25px;\n  font-size: 18px;\n  margin-bottom: 10px;\n}\n.react-as-tagfield .react-as-tagfield-input:focus {\n  outline: none;\n}\n.react-as-tagfield .react-as-tagfield-tag {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  border-radius: 3px;\n  margin: 0 10px 10px 0;\n  background-color: rgba(64, 224, 208, 0.5);\n  color: #666666;\n  cursor: default;\n}\n.react-as-tagfield .react-as-tagfield-tag.highlight {\n  background-color: rgba(231, 76, 60, 0.5);\n  color: #666666;\n}\n.react-as-tagfield .react-as-tagfield-tag:after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.react-as-tagfield .react-as-tagfield-tag .react-as-tagfield-tag-del {\n  margin-left: 15px;\n  cursor: pointer;\n  font-size: 80%;\n}\n.react-as-tagfield .react-as-tagfield-tag .react-as-tagfield-tag-del:after {\n  font-family: 'Helvetica Neue', HelveticaNeue, '微软雅黑', Arial, sans-serif;\n  content: 'X';\n  color: #fff;\n}\n", ""]);
 
 /***/ },
 /* 237 */
